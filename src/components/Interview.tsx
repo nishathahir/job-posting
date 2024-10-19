@@ -187,7 +187,7 @@ const InterviewForm = () => {
   };
 
   return (
-    <div style={{ margin: "2rem" }}>
+    <div style={{ margin: "4rem 5rem" }}>
       {/* Create Interview Button */}
       {!showForm && (
         <Button
@@ -195,13 +195,13 @@ const InterviewForm = () => {
           color="primary"
           onClick={handleButtonClick} // Show form on button click
           sx={{
-            width: "310px",
+            width: "250px",
             height: "57px",
             borderRadius: "8px",
             fontFamily: "DM Sans",
             textTransform: "none",
             fontWeight: 600,
-            fontSize: "33px",
+            fontSize: "20px",
             background: "#0B66EF",
           }}
         >
@@ -426,7 +426,7 @@ const InterviewForm = () => {
             open={snackbarOpen}
             autoHideDuration={6000}
             onClose={() => setSnackbarOpen(false)}
-            anchorOrigin={{ vertical: "top", horizontal: "right" }} // Positioning
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
           >
             <MuiAlert
               onClose={() => setSnackbarOpen(false)}
