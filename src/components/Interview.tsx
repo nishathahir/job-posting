@@ -26,6 +26,7 @@ const InterviewForm = () => {
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
     "success"
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAddCandidate = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" && candidateEmail) {
@@ -53,6 +54,7 @@ const InterviewForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     setErrors({
       jobTitle: "",
@@ -157,6 +159,7 @@ const InterviewForm = () => {
 
       console.error("Error submitting form:", error);
     }
+    setIsLoading(false);
     setJobTitle("");
     setJobDescription("");
     setExperienceLevel("");
@@ -167,6 +170,7 @@ const InterviewForm = () => {
   const labelStyle = {
     fontSize: "2rem",
     fontWeight: "400",
+    marginRight: "10px",
   };
 
   return (
@@ -296,9 +300,11 @@ const InterviewForm = () => {
                 <MenuItem value="" disabled>
                   Select Experience Level
                 </MenuItem>
-                <MenuItem value="Entry Level">Entry Level</MenuItem>
-                <MenuItem value="Mid Level">Mid Level</MenuItem>
-                <MenuItem value="Senior Level">Senior Level</MenuItem>
+                <MenuItem value="Entry Level">Entry Level (0-1 years)</MenuItem>
+                <MenuItem value="Mid Level">Mid Level (2-5 years)</MenuItem>
+                <MenuItem value="Senior Level">
+                  Senior Level (5+ years)
+                </MenuItem>
               </TextField>
               {errors.experienceLevel && (
                 <Typography
@@ -332,6 +338,7 @@ const InterviewForm = () => {
                 InputProps={{
                   sx: {
                     fontSize: "1.3rem",
+                    padding: "10px",
                   },
                   startAdornment: (
                     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -393,6 +400,7 @@ const InterviewForm = () => {
             variant="contained"
             color="primary"
             type="submit"
+            disabled={isLoading} // Disable button while loading
             sx={{
               width: "100px",
               height: "30px",
@@ -403,8 +411,9 @@ const InterviewForm = () => {
               marginTop: "1.35rem",
             }}
           >
-            Send
+            {isLoading ? <span>Sending...</span> : <span>Send</span>}
           </Button>
+
           <Snackbar
             open={snackbarOpen}
             autoHideDuration={6000}
