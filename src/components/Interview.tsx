@@ -27,12 +27,11 @@ const InterviewForm = () => {
     "success"
   );
 
-  // Function to add candidate email as a chip
   const handleAddCandidate = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" && candidateEmail) {
-      e.preventDefault(); // Prevent form submission on Enter
+      e.preventDefault();
       setCandidates([...candidates, candidateEmail]);
-      setCandidateEmail(""); // Clear input after adding
+      setCandidateEmail("");
     }
   };
 
@@ -41,7 +40,7 @@ const InterviewForm = () => {
   };
 
   const handleButtonClick = () => {
-    setShowForm(true); // Show form when "Create Interview" button is clicked
+    setShowForm(true);
   };
 
   const [errors, setErrors] = useState({
@@ -55,7 +54,6 @@ const InterviewForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Reset errors
     setErrors({
       jobTitle: "",
       jobDescription: "",
@@ -66,13 +64,11 @@ const InterviewForm = () => {
 
     let isValid = true;
 
-    // Validate Job Title
     if (!jobTitle) {
       isValid = false;
       setErrors((prev) => ({ ...prev, jobTitle: "Job Title is required." }));
     }
 
-    // Validate Job Description
     if (!jobDescription) {
       isValid = false;
       setErrors((prev) => ({
@@ -87,7 +83,6 @@ const InterviewForm = () => {
         experienceLevel: "Experience Level is required.",
       }));
     }
-    // Validate Experience Level
     if (!experienceLevel) {
       isValid = false;
       setErrors((prev) => ({
@@ -96,7 +91,6 @@ const InterviewForm = () => {
       }));
     }
 
-    // Validate End Date
     if (!endDate) {
       isValid = false;
       setErrors((prev) => ({
@@ -105,8 +99,7 @@ const InterviewForm = () => {
       }));
     }
 
-    // Validate Candidates' Emails
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (candidates.length === 0) {
       isValid = false;
       setErrors((prev) => ({
@@ -121,19 +114,16 @@ const InterviewForm = () => {
             ...prev,
             candidates: "Invalid Email.",
           }));
-          break; // Stop checking after the first invalid email
+          break;
         }
       }
     }
 
-    // Show error messages if validation fails
     if (!isValid) {
-      return; // Stop form submission
+      return;
     }
 
-    // Log the entered details if all validations pass
     try {
-      // Make a POST request to the API
       const response = await axios.post(
         "https://job-portal-posting-backend-6f18a648e9e3.herokuapp.com/api/interviews",
         {
@@ -145,35 +135,28 @@ const InterviewForm = () => {
         }
       );
       if (response.status === 200) {
-        // Show Snackbar for success
-        setSnackbarMessage("Interview details submitted successfully!");
+        setSnackbarMessage("Job alerts sent successfully!");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
 
-        // Reset form fields
         setJobTitle("");
         setJobDescription("");
         setExperienceLevel("");
         setCandidates([]);
         setEndDate("");
       }
-      // Reset form fields (optional)
       setJobTitle("");
       setJobDescription("");
       setExperienceLevel("");
       setCandidates([]);
       setEndDate("");
-
-      // Optionally, handle success state, like showing a success message or redirecting
     } catch (error) {
       setSnackbarMessage("Failed to submit interview details.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
 
       console.error("Error submitting form:", error);
-      // Optionally, set an error state to inform the user
     }
-    // Reset form fields (optional)
     setJobTitle("");
     setJobDescription("");
     setExperienceLevel("");
@@ -193,7 +176,7 @@ const InterviewForm = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleButtonClick} // Show form on button click
+          onClick={handleButtonClick}
           sx={{
             width: "250px",
             height: "57px",
@@ -234,7 +217,7 @@ const InterviewForm = () => {
                 value={jobTitle}
                 InputProps={{
                   sx: {
-                    fontSize: "1.3rem", // Adjust font size here
+                    fontSize: "1.3rem",
                   },
                 }}
                 onChange={(e) => setJobTitle(e.target.value)}
@@ -270,7 +253,7 @@ const InterviewForm = () => {
                 value={jobDescription}
                 InputProps={{
                   sx: {
-                    fontSize: "1.3rem", // Adjust font size here
+                    fontSize: "1.3rem",
                   },
                 }}
                 onChange={(e) => setJobDescription(e.target.value)}
@@ -305,7 +288,7 @@ const InterviewForm = () => {
                 onChange={(e) => setExperienceLevel(e.target.value)}
                 InputProps={{
                   sx: {
-                    fontSize: "1.3rem", // Adjust font size here
+                    fontSize: "1.3rem",
                   },
                 }}
               >
@@ -345,10 +328,10 @@ const InterviewForm = () => {
                 placeholder="Enter candidate email"
                 value={candidateEmail}
                 onChange={(e) => setCandidateEmail(e.target.value)}
-                onKeyDown={handleAddCandidate} // Use onKeyDown to capture Enter key
+                onKeyDown={handleAddCandidate}
                 InputProps={{
                   sx: {
-                    fontSize: "1.3rem", // Adjust font size here
+                    fontSize: "1.3rem",
                   },
                   startAdornment: (
                     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
