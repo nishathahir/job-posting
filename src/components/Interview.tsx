@@ -168,7 +168,7 @@ const InterviewForm = () => {
   };
 
   const labelStyle = {
-    fontSize: "2rem",
+    fontSize: "1.5rem",
     fontWeight: "400",
     marginRight: "10px",
   };
